@@ -28,6 +28,9 @@ function CartHero() {
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    // const cartCount = storedCart.map((product) => {
+    //   return { ...product, count: 1 };
+    // });
     setCart(storedCart);
   }, []);
 

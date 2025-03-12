@@ -17,13 +17,21 @@ function HomeHero({searchItem}) {
 
   const handleCart = (product) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setOpen(true);
+    const existingProduct = cart.find((item) => item.id === product.id);
 
-    setTimeout(() => {
-      setOpen(false);
-    }, 2000);
+    if (existingProduct) {
+      existingProduct.count += 1;
+    } else{
+      product.count = 1;
+      cart.push(product);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+      setOpen(true);
+
+      setTimeout(() => {
+        setOpen(false);
+      }, 2000);
+      return;
   };
 
   const filterProducts = products.filter(product => 

@@ -4,23 +4,31 @@ import Img2 from "/src/assets/checkout/masterCard.jpeg";
 import Img3 from "/src/assets/checkout/discover.jpeg";
 import Img4 from "/src/assets/checkout/american.png";
 import { FaLock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function CheckOutForm() {
-  const [cardNo , setCardNo] = useState('')
-  const [month , setMonth] = useState('') 
-  const [year , setYear] = useState('') 
-  const [cvv , setCvv] = useState('') 
+  const navigate = useNavigate();
+  const [cardNo, setCardNo] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [cvv, setCvv] = useState("");
 
-function handleSubmit(){
-  setCardNo('');
-  setMonth('')
-  setYear('')
-  setCvv('')
+  function handleSubmit() {
+    if (cardNo === "" || month === "" || year === "" || cvv === "") {
+      alert("Please fill all the fields.");
+      return;
+    }
+    setCardNo("");
+    setMonth("");
+    setYear("");
+    setCvv("");
 
-  setTimeout(()=>{
-    alert("Your order submitted successfully.")
-  }, 1000)
-}
+    localStorage.removeItem("cart");
+    setTimeout(() => {
+      alert("Your order submitted successfully.");
+      navigate("/my-cart");
+    }, 1000);
+  }
 
   return (
     <>
@@ -83,9 +91,7 @@ function handleSubmit(){
                   onChange={(e) => setMonth(e.target.value)}
                   className="sm:w-[180px] w-auto  p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="">
-                    Select Month
-                  </option>
+                  <option value="">Select Month</option>
                   <option value="01">January</option>
                   <option value="02">February</option>
                   <option value="03">March</option>
@@ -108,9 +114,7 @@ function handleSubmit(){
                   onChange={(e) => setYear(e.target.value)}
                   className="sm:w-[180px] w-auto p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="">
-                    Select Year
-                  </option>
+                  <option value="">Select Year</option>
                   {Array.from(
                     { length: 10 },
                     (_, i) => new Date().getFullYear() + i
@@ -121,11 +125,10 @@ function handleSubmit(){
                   ))}
                 </select>
               </div>
-
             </div>
 
             <div className="flex flex-wrap items-center gap-4 mt-2">
-            <div className="flex flex-col w-auto gap-1">
+              <div className="flex flex-col w-auto gap-1">
                 <label
                   htmlFor="cardNumber"
                   className="text-gray-600 text-base font-light"
@@ -140,21 +143,33 @@ function handleSubmit(){
                   className="w-full p-2 border border-gray-300 rounded-md"
                 />
               </div>
-              <a href="#" className="text-gray-500 text-sm underline w-[150px] mt-3">Where can i find my Security Code?</a>
+              <a
+                href="#"
+                className="text-gray-500 text-sm underline w-[150px] mt-3"
+              >
+                Where can i find my Security Code?
+              </a>
             </div>
 
             <div className="flex w-full items-center justify-center gap-2 mt-4">
-            <FaLock className="text-yellow-500 text-xl"/>
-                <p className="text-lg font-semibold text-gray-700">Secure 256-bit SSL Encryption</p>
+              <FaLock className="text-yellow-500 text-xl" />
+              <p className="text-lg font-semibold text-gray-700">
+                Secure 256-bit SSL Encryption
+              </p>
             </div>
 
-            <button onClick={handleSubmit} className="w-full text-center mt-2 py-4 px-3 bg-green-400 rounded-lg cursor-pointer hover:bg-green-500">
-                Rush My Order
+            <button
+              onClick={handleSubmit}
+              className="w-full text-center mt-2 py-4 px-3 bg-green-400 rounded-lg cursor-pointer hover:bg-green-500"
+            >
+              Rush My Order
             </button>
 
             <div className="flex justify-center items-center gap-1 mt-3">
-                <input type="checkbox" name="" id="" className=""/>
-                <p className="text-gray-600 text-sm">Yes, Please Start My Monthly Magazines Free Trail!</p>
+              <input type="checkbox" name="" id="" className="" />
+              <p className="text-gray-600 text-sm">
+                Yes, Please Start My Monthly Magazines Free Trail!
+              </p>
             </div>
           </div>
         </div>
